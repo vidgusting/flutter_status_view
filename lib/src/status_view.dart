@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import "dart:io";
 
 class StatusView extends StatelessWidget {
+  final bool isAsset;
   final int numberOfStatus;
   final int indexOfSeenStatus;
   final double spacing;
@@ -21,7 +23,8 @@ class StatusView extends StatelessWidget {
       required this.centerImageUrl,
       this.strokeWidth = 4,
       this.seenColor = Colors.grey,
-      this.unSeenColor = Colors.blue})
+      this.unSeenColor = Colors.blue,
+      required this.isAsset})
       : assert(centerImageUrl != null, "Please provide centerImageUrl");
 
   @override
@@ -43,10 +46,15 @@ class StatusView extends StatelessWidget {
                   unSeenColor: unSeenColor),
             ),
           ),
-          CircleAvatar(
-            radius: radius - padding,
-            backgroundImage: NetworkImage(centerImageUrl),
-          ),
+          isAsset
+              ? CircleAvatar(
+                  radius: radius - padding,
+                  backgroundImage: AssetImage(centerImageUrl),
+                )
+              : CircleAvatar(
+                  radius: radius - padding,
+                  backgroundImage: FileImage(File(centerImageUrl)),
+                ),
         ],
       ),
     );
