@@ -3,29 +3,29 @@ import 'package:flutter/material.dart';
 import "dart:io";
 
 class StatusView extends StatelessWidget {
-  /////centerImageUrl[0] means its an asset image , centerImageUrl[1] is the image String
-  ///centerImageUrl[1] means its an file image , centerImageUrl[1] is the image path
+  bool isAsset;
   final int numberOfStatus;
   final int indexOfSeenStatus;
   final double spacing;
   final double radius;
   final double padding;
-  final List<dynamic> centerImageUrl;
+  final String centerImageUrl;
   final double strokeWidth;
   final Color seenColor;
   final Color unSeenColor;
 
-  StatusView({
-    this.numberOfStatus = 10,
-    this.indexOfSeenStatus = 0,
-    this.spacing = 10.0,
-    this.radius = 50,
-    this.padding = 5,
-    required this.centerImageUrl,
-    this.strokeWidth = 4,
-    this.seenColor = Colors.grey,
-    this.unSeenColor = Colors.blue,
-  }) : assert(centerImageUrl != null, "Please provide centerImageUrl");
+  StatusView(
+      {this.numberOfStatus = 10,
+      this.indexOfSeenStatus = 0,
+      this.spacing = 10.0,
+      this.radius = 50,
+      this.padding = 5,
+      required this.centerImageUrl,
+      this.strokeWidth = 4,
+      this.seenColor = Colors.grey,
+      this.unSeenColor = Colors.blue,
+      required this.isAsset})
+      : assert(centerImageUrl != null, "Please provide centerImageUrl");
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +46,14 @@ class StatusView extends StatelessWidget {
                   unSeenColor: unSeenColor),
             ),
           ),
-          centerImageUrl[0] == 0
+          isAsset
               ? CircleAvatar(
                   radius: radius - padding,
-                  backgroundImage: AssetImage(centerImageUrl[1]),
+                  backgroundImage: AssetImage(centerImageUrl),
                 )
               : CircleAvatar(
                   radius: radius - padding,
-                  backgroundImage: FileImage(File(centerImageUrl[1])),
+                  backgroundImage: FileImage(File(centerImageUrl)),
                 ),
         ],
       ),
